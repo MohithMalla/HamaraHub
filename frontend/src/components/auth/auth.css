@@ -1,0 +1,220 @@
+:root {
+  /* HamaraHub Dark Theme Palette */
+  --bg-dark: #010409;        /* Main page background */
+  --bg-card: #0d1117;        /* Form card background */
+  --bg-input: #010409;       /* Input field background */
+  --border-subtle: #30363d;  /* Borders */
+  --text-main: #e6edf3;
+  --text-muted: #7d8590;
+  --primary-blue: #1f6feb;
+  --primary-hover: #388bfd;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-dark);
+}
+
+/* --- LAYOUT --- */
+.auth-wrapper {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden; /* Prevents scrollbars from abstract shapes */
+}
+
+/* --- LEFT SIDE (Brand) --- */
+.auth-brand-side {
+  display: none; /* Hidden on mobile */
+  position: relative;
+  width: 50%;
+  background-color: var(--bg-dark);
+  border-right: 1px solid var(--border-subtle);
+  flex-direction: column;
+  justify-content: center; /* Vertically centers the text */
+  padding: 80px;
+  z-index: 1;
+}
+
+@media (min-width: 1024px) {
+  .auth-brand-side {
+    display: flex;
+  }
+}
+
+.brand-content {
+  position: relative;
+  z-index: 2;
+}
+
+.brand-logo-img {
+  height: 60px; /* Adjust size of logo */
+  width: auto;
+  margin-bottom: 30px;
+}
+
+.brand-heading {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.text-highlight {
+  color: var(--primary-blue);
+}
+
+.brand-subtext {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  max-width: 450px;
+  line-height: 1.6;
+}
+
+/* Blue Glow Effect */
+.abstract-shape {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(31, 111, 235, 0.15) 0%, rgba(1, 4, 9, 0) 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* --- RIGHT SIDE (Form) --- */
+.auth-form-side {
+  width: 100%;
+  display: flex;
+  align-items: center; /* Vertically centers the form */
+  justify-content: center; /* Horizontally centers the form */
+  background-color: var(--bg-dark);
+  padding: 20px;
+}
+
+@media (min-width: 1024px) {
+  .auth-form-side {
+    width: 50%;
+  }
+}
+
+.login-box-wrapper {
+  width: 100%;
+  max-width: 380px; /* Standard width for auth forms */
+}
+
+.mobile-logo {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.mobile-logo img {
+  height: 40px;
+}
+@media (min-width: 1024px) {
+  .mobile-logo { display: none; }
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.login-header h2 {
+  color: var(--text-main);
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.login-subtext {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* --- FORM STYLING --- */
+.login-box {
+  background-color: var(--bg-card);
+  padding: 30px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+}
+
+.input-group {
+  margin-bottom: 16px;
+}
+
+.label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+
+.input {
+  width: 100%;
+  box-sizing: border-box; /* Ensures padding doesn't break width */
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--text-main);
+  background-color: var(--bg-input); /* Darker input bg */
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.3);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: var(--primary-blue);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: var(--primary-hover);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --- FOOTER LINK --- */
+.pass-box {
+  margin-top: 20px;
+  padding: 15px;
+  text-align: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  background-color: var(--bg-card); /* Optional: can be transparent */
+}
+
+.pass-box p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-main);
+}
+
+.link-text {
+  color: var(--primary-blue);
+  text-decoration: none;
+}
+.link-text:hover {
+  text-decoration: underline;
+}
