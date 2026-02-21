@@ -209,7 +209,7 @@ const CreateRepo = () => {
 
     // Start Loading
     setIsDeploying(true);
-
+    console.log(repoName,description,visibility,userId)
     try {
       const response = await axios.post("http://localhost:3002/repo/create", {
         name: repoName,

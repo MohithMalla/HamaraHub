@@ -75,9 +75,9 @@
 import express, { json } from "express";
 import { config } from "dotenv";
 import cors from "cors";
-import mongoosePkg from 'mongoose'; // Renamed to mongoosePkg
-const { connect, connection } = mongoosePkg;
-
+// import mongoosePkg from 'mongoose'; 
+// const { connect, connection } = mongoosePkg;
+import connectDB from "./config/db.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import mainRouter from "./routes/main.router.js";
@@ -152,13 +152,14 @@ function startServer() {
 
   const mongoURI = process.env.MONGODB_URI;
 
-  connect(mongoURI)
-    .then(() => console.log("MongoDB connected!"))
-    .catch((err) => console.error("Unable to connect : ", err));
+  // connect(mongoURI)
+  //   .then(() => console.log("MongoDB connected!"))
+  //   .catch((err) => console.error("Unable to connect : ", err));
 
   app.use(cors({ origin: "*" }));
 
-  app.use("/", mainRouter);
+  app.use( mainRouter); 
+
 
   let user = "test";
   const httpServer = createServer(app);
@@ -179,13 +180,13 @@ function startServer() {
     });
   });
 
-  const db = connection;
+  // const db = connection;
 
-  db.once("open", async () => {
-    console.log("CRUD operations called");
-    // CRUD operations
-  });
+  // db.once("open", async () => {
+  //   console.log("CRUD operations called");
 
+  // });
+  connectDB();
   httpServer.listen(port, () => {
     console.log(`Server is running on PORT ${port}`);
   });
