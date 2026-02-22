@@ -120,16 +120,58 @@ async function getUserProfile(req, res) {
   }
 }
 
+// async function updateUserProfile(req, res) {
+//   const currentID = req.params.id;
+//   const { email, password } = req.body;
+
+//   try {
+//     await connectClient();
+//     const db = client.db("githubclone");
+//     const usersCollection = db.collection("users");
+
+//     let updateFields = { email };
+//     if (password) {
+//       const salt = await genSalt(10);
+//       const hashedPassword = await hash(password, salt);
+//       updateFields.password = hashedPassword;
+//     }
+
+//     const result = await usersCollection.findOneAndUpdate(
+//       {
+//         _id: new ObjectId(currentID),
+//       },
+//       { $set: updateFields },
+//       { returnDocument: "after" }
+//     );
+//     if (!result.value) {
+//       return res.status(404).json({ message: "User not found!" });
+//     }
+
+//     res.send(result.value);
+//   } catch (err) {
+//     console.error("Error during updating : ", err.message);
+//     res.status(500).send("Server error!");
+//   }
+// }
+
+
 async function updateUserProfile(req, res) {
   const currentID = req.params.id;
-  const { email, password } = req.body;
+  // Extract all possible fields from the frontend request
+  const { email, password, username, bio } = req.body;
 
   try {
     await connectClient();
     const db = client.db("githubclone");
     const usersCollection = db.collection("users");
 
-    let updateFields = { email };
+    // Dynamically build the update object
+    let updateFields = {};
+    if (email) updateFields.email = email;
+    if (username) updateFields.username = username;
+    if (bio) updateFields.bio = bio;
+
+    // Handle password hashing if a new password is provided
     if (password) {
       const salt = await genSalt(10);
       const hashedPassword = await hash(password, salt);
@@ -137,17 +179,19 @@ async function updateUserProfile(req, res) {
     }
 
     const result = await usersCollection.findOneAndUpdate(
-      {
-        _id: new ObjectId(currentID),
-      },
+      { _id: new ObjectId(currentID) },
       { $set: updateFields },
       { returnDocument: "after" }
     );
-    if (!result.value) {
+
+    // MongoDB driver compatibility check
+    const updatedUser = result.value || result;
+
+    if (!updatedUser) {
       return res.status(404).json({ message: "User not found!" });
     }
 
-    res.send(result.value);
+    res.send(updatedUser);
   } catch (err) {
     console.error("Error during updating : ", err.message);
     res.status(500).send("Server error!");

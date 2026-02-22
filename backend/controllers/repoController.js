@@ -6,6 +6,7 @@ import Issue from "../models/issueModel.js";
 // --- 1. CREATE REPO & GENERATE SITE ---
 async function createRepository(req, res) {
   const { owner, name, description, visibility } = req.body;
+  // (repoName,description,visibility,owner)
 
   try {
     if (!name) return res.status(400).json({ error: "Repository name is required!" });
@@ -144,7 +145,7 @@ async function fetchRepositoryByName(req, res) {
     const repository = await Repository.findOne({ name }).populate("owner");
     res.json(repository);
   } catch (err) {
-    res.status(500).send("Server error");
+    res.status(500).send("ewewew error");
   }
 }
 

@@ -7,6 +7,7 @@ import Profile from './components/user/Profile';
 import { useAuth } from './authContext';
 import CreateRepo from './components/repo/CreateRepo';
 import RepoDetail from './components/repo/RepoDetail';
+import Settings from './components/user/Settings';
 
 const ProjectRoutes = () => {
     const {currentUser, setCurrentUser} = useAuth();
@@ -52,7 +53,11 @@ const ProjectRoutes = () => {
             // Route for the Repo Details/Editor page
             path:"/repo/:id",
             element: <RepoDetail />
-        }
+        },
+        {
+            path:"/settings", // <-- Add this new route
+            element: <Settings />
+        },
     ]);
 
     return element;
