@@ -19,8 +19,8 @@ const Login = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      // specific login endpoint
-      const res = await axios.post(`${process.env.BACKEND_URL}/auth`, {
+      
+      const res = await axios.post("http://localhost:3002/auth", {
         email,
         password,
       });
