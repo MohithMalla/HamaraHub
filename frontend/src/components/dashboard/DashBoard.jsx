@@ -132,7 +132,7 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         // Fetch user repositories
-        const response = await axios.get(`${process.env.BACKEND_URL}/repo/user/${userId}`);
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/repo/user/${userId}`);
         
         // Backend returns { repositories: [...] }
         setRepositories(response.data.repositories || []);

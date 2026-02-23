@@ -28,7 +28,7 @@ const RepoDetail = () => {
   const loadRepoData = async () => {
     try {
       // Currently using MongoDB to fetch files, as your S3 tree is currently empty
-      const repoRes = await axios.get(`http://localhost:3002/repo/${id}`);
+      const repoRes = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/repo/${id}`);
       setRepo(repoRes.data);
     } catch (err) {
       console.error("Error fetching repo details:", err);
@@ -47,7 +47,7 @@ const RepoDetail = () => {
     );
   }
 
-  const liveUrl = `http://localhost:3002/repo/view/${repo._id}`;
+  const liveUrl = `${import.meta.env.VITE_BACKEND_URL}/repo/view/${repo._id}`;
   
   // Find README file if it exists
   const readmeFile = repo.content?.find(f => f.fileName.toLowerCase() === 'readme.md');

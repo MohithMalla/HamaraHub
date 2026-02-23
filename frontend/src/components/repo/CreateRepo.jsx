@@ -42,7 +42,7 @@ const CreateRepo = () => {
     setIsDeploying(true);
     console.log(repoName,description,visibility,userId)
     try {
-      const response = await axios.post("http://localhost:3002/repo/create", {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/repo/create`, {
         name: repoName,
         description: description,
         visibility: visibility,

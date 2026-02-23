@@ -37,7 +37,7 @@ const RepoView = () => {
   useEffect(() => {
     const fetchMetadata = async () => {
       try {
-        const res = await axios.get(`http://localhost:3002/repo/getmeta?userId=${userId}&repo=${repoName}`);
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/repo/getmeta?userId=${userId}&repo=${repoName}`);
         setMeta(res.data);
         const defaultB = res.data.defaultBranch;
         setSelectedBranch(defaultB);
@@ -59,7 +59,7 @@ const RepoView = () => {
     const fetchTree = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3002/repo/getrepo?userId=${userId}&repo=${repoName}&branch=${selectedBranch}&commitHash=${selectedCommit}`
+          `${import.meta.env.VITE_BACKEND_URL}/repo/getrepo?userId=${userId}&repo=${repoName}&branch=${selectedBranch}&commitHash=${selectedCommit}`
         );
         setFileTree(res.data.tree);
         setViewMode("tree");
@@ -73,7 +73,7 @@ const RepoView = () => {
   // 3. Load File Content
   const handleFileClick = async (hash) => {
     try {
-      const res = await axios.get(`http://localhost:3002/repo/getfile/${userId}/${repoName}?hash=${hash}`);
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/repo/getfile/${userId}/${repoName}?hash=${hash}`);
       setFileContent(res.data);
       setViewMode("file");
     } catch (err) {

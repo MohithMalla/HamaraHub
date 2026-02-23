@@ -20,7 +20,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post(`${process.env.BACKEND_URL}/signup`, {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/signup`, {
         email, password, username,
       });
       localStorage.setItem("token", res.data.token);

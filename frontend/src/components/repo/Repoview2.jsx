@@ -31,7 +31,7 @@ const UnifiedRepoView = () => {
   // 1. REUSABLE FETCH FUNCTION (Fixes Auto-Refetching)
   const fetchRepoData = useCallback(async (isInitialLoad = false) => {
     try {
-      const res = await axios.get(`http://localhost:3002/repo/${id}`);
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/repo/${id}`);
       const repoData = res.data;
       setRepo(repoData);
 
@@ -58,7 +58,7 @@ const UnifiedRepoView = () => {
   const fetchS3Metadata = async (repoData) => {
     try {
       const ownerId = typeof repoData.owner === 'object' ? repoData.owner._id : repoData.owner;
-      const res = await axios.get(`http://localhost:3002/repo/getmeta`, {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/repo/getmeta`, {
         params: { userId: ownerId, repo: repoData.name }
       });
       setMeta(res.data);
@@ -75,7 +75,7 @@ const UnifiedRepoView = () => {
       const fetchTree = async () => {
         const ownerId = typeof repo.owner === 'object' ? repo.owner._id : repo.owner;
         try {
-          const res = await axios.get(`http://localhost:3002/repo/getrepo`, {
+          const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/repo/getrepo`, {
             params: { 
               userId: ownerId, repo: repo.name, 
               branch: selectedBranch, commitHash: selectedCommit 
@@ -109,7 +109,7 @@ const UnifiedRepoView = () => {
       };
 
       try {
-        const response = await axios.post(`http://localhost:3002/repo/update/${id}`, payload);
+        const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/repo/update/${id}`, payload);
 
         if (response.data.message === "cant be updated localpush conflict") {
           alert("❌ Conflict: Repository is managed locally.");
@@ -142,7 +142,7 @@ const UnifiedRepoView = () => {
       setCode("// Fetching from S3...");
       try {
         const ownerId = typeof repo.owner === 'object' ? repo.owner._id : repo.owner;
-        const res = await axios.get(`http://localhost:3002/repo/getfile/${ownerId}/${repo.name}`, {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/repo/getfile/${ownerId}/${repo.name}`, {
           params: { hash: file.hash }
         });
         setCode(res.data);
@@ -159,7 +159,7 @@ const UnifiedRepoView = () => {
     if (!activeFile || repo?.isremote === false) return;
     setIsSaving(true);
     try {
-      await axios.post(`http://localhost:3002/repo/update/${id}`, {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/repo/update/${id}`, {
         content: { fileName: activeFile.fileName, code: code }
       });
       alert("✅ Saved to MongoDB successfully!");
