@@ -20,7 +20,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:3002/signup", {
+      const res = await axios.post(`${process.env.BACKEND_URL}/signup`, {
         email, password, username,
       });
       localStorage.setItem("token", res.data.token);
