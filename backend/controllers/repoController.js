@@ -67,21 +67,30 @@ async function updateRepositoryById(req, res) {
 
   try {
     const repository = await Repository.findById(id);
-    if (!repository) return res.status(404).json({ error: "Repository not found!" });
+    if (!repository)
+      return res.status(404).json({ error: "Repository not found!" });
 
     if (description) repository.description = description;
 
-    // Smart Update: If file exists, update it. If not, add it.
     if (content && content.fileName && content.code) {
+
+      if (repository.isremote == null) {
+        repository.isremote = true;
+      } 
+      else if (repository.isremote === false) {
+        return res.json({
+          message: "cant be updated localpush conflict",
+          repository: repository,
+        });
+      }
+
       const existingFileIndex = repository.content.findIndex(
         (f) => f.fileName === content.fileName
       );
 
       if (existingFileIndex !== -1) {
-        // File exists: Update existing code
         repository.content[existingFileIndex].code = content.code;
       } else {
-        // New File: Push to array
         repository.content.push(content);
       }
     }
@@ -92,12 +101,12 @@ async function updateRepositoryById(req, res) {
       message: "Repository updated successfully!",
       repository: updatedRepository,
     });
+
   } catch (err) {
     console.error("Error updating repo:", err.message);
     res.status(500).send("Server error");
   }
 }
-
 // --- 3. SERVE THE WEBSITE (Hosting Engine) ---
 async function serveRepository(req, res) {
   const { id } = req.params;

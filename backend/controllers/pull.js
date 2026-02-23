@@ -1,8 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { s3, S3_BUCKET } from '../config/aws-config.js';
-
-
 async function pullRepo(){
     const repoPath = path.resolve(process.cwd(), "HamaraGit");
     const commitsPath = path.join(repoPath, "commits");

@@ -11,8 +11,8 @@ import {
   serveRepository 
 } from "../controllers/repoController.js";
 import {readBlob,readObject,readTree,getFile,getRepoTree,getRepoMeta} from "../controllers/fetchrepo.js";
-
 const repoRouter = Router();
+
 repoRouter.get('/repo/getrepo',(req,res,next)=>{
   console.log("ROUTE HIT");
   next();
@@ -24,12 +24,10 @@ repoRouter.get("/repo/all", getAllRepositories);
 repoRouter.get("/repo/:id", fetchRepositoryById);
 repoRouter.get("/repo/name/:name", fetchRepositoryByName);
 repoRouter.get("/repo/user/:userID", fetchRepositoriesForCurrentUser);
-repoRouter.put("/repo/update/:id", updateRepositoryById);
+repoRouter.post("/repo/update/:id", updateRepositoryById);
 repoRouter.delete("/repo/delete/:id", deleteRepositoryById);
 repoRouter.patch("/repo/toggle/:id", toggleVisibilityById);
 
-
-// ✅ HOSTING ROUTE (Important!)
 repoRouter.get("/repo/view/:id", serveRepository);
 
 export {repoRouter};

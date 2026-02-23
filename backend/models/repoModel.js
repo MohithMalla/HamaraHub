@@ -10,15 +10,19 @@ const RepositorySchema = new Schema({
   description: {
     type: String,
   },
-  // ✅ Content stores the actual code
+  
   content: [
     {
-      fileName: { type: String, required: true }, // e.g. "index.html"
-      code: { type: String, required: true }      // e.g. "<h1>Hello</h1>"
+      fileName: { type: String, required: true }, 
+      code: { type: String, required: true }      
     },
   ],
+  isremote:{
+       type:Boolean ,
+       default:null 
+  },
   visibility: {
-    type: Boolean, // true = public, false = private
+    type: Boolean, 
     default: true
   },
   owner: {

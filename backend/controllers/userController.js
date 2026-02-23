@@ -120,41 +120,6 @@ async function getUserProfile(req, res) {
   }
 }
 
-// async function updateUserProfile(req, res) {
-//   const currentID = req.params.id;
-//   const { email, password } = req.body;
-
-//   try {
-//     await connectClient();
-//     const db = client.db("githubclone");
-//     const usersCollection = db.collection("users");
-
-//     let updateFields = { email };
-//     if (password) {
-//       const salt = await genSalt(10);
-//       const hashedPassword = await hash(password, salt);
-//       updateFields.password = hashedPassword;
-//     }
-
-//     const result = await usersCollection.findOneAndUpdate(
-//       {
-//         _id: new ObjectId(currentID),
-//       },
-//       { $set: updateFields },
-//       { returnDocument: "after" }
-//     );
-//     if (!result.value) {
-//       return res.status(404).json({ message: "User not found!" });
-//     }
-
-//     res.send(result.value);
-//   } catch (err) {
-//     console.error("Error during updating : ", err.message);
-//     res.status(500).send("Server error!");
-//   }
-// }
-
-
 async function updateUserProfile(req, res) {
   const currentID = req.params.id;
   // Extract all possible fields from the frontend request
